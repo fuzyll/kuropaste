@@ -1,0 +1,49 @@
+html { overflow-y: scroll; }
+html, body, h1, h2, h3, h4, h5, h6, p {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+}
+article, aside, figure, footer, header, hgroup, nav, section { display: block; }
+
+html { background: #141414; color: #F8F8F8; font-size: 12px; }
+header { width: 100%; height: 80px; }
+footer { width: 100%; height: 50px; text-align: center; }
+h1 { font-size: 48px; font-weight: bold; }
+h2 { font-size: 36px; font-weight: bold; }
+h3 { font-size: 24px; font-weight: bold; }
+h4 { font-size: 20px; font-weight: bold; }
+h5 { font-size: 16px; font-weight: bold; }
+h6 { font-size: 12px; font-weight: bold; }
+
+header h1.logo {
+    width: 400px;
+    height: 80px;
+    background: url(../img/logo.png);
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+input.name {
+    border: 1px solid #000000;
+}
+
+select.language {
+    border: 1px solid #000000;
+}
+
+textarea.contents {
+    width: 600px;
+    height: 300px;
+    border: 1px solid #000000;
+}
+
+input.save {
+    border: 1px solid #000000;
+}
+
