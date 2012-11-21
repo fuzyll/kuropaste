@@ -9,6 +9,7 @@ Depencencies:
 * HAML
 * Sequel
 * Ultraviolet
+* Sanitize
 
 Features:
 * Saves pastes into a database (currently hard-coded to a SQLite database)

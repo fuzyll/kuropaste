@@ -24,6 +24,7 @@
 
 require "sinatra/base"
 require "haml"
+require "sanitize"
 require "sequel"
 require "uv"
 # require "grit"
