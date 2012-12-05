@@ -18,10 +18,18 @@ Usage:
     # safely take your box offline
     bundle exec rackup kuropaste.ru
 
-Roadmap:
-* Add Grit as a dependency and make all pastes into clonable git repositories
-* Add a few more things to the database (creation time, unique base52 ID, etc)
-* Support Postgres as a backend (should also let user choose a backend)
+Short-Term Roadmap:
+* Create new img/logo.png and img/favicon.ico
+* Log more data in the database (creation time, unique base52 paste ID, etc)
+* Limit list functionality to 25/50/100 pastes at a time
+* Add line number toggle in show functionality
+* Add search functionality to top bar
+* Continue tweaking CSS styles
+* Test setting up Apache and Passenger
+
+Long-Term Roadmap:
 * Add some unit tests or something so I know when I've broken everything
-* Maybe use SASS to handle CSS templates? (might not be worth the effort)
+* Add support for handling multiple files per paste
+* Use Grit as backend and make all pastes into clonable git repositories
+* Consider using SASS to handle CSS templates
 
