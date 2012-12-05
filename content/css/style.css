@@ -67,8 +67,12 @@ nav.main ul {
     font-size: 16px;
     list-style: none;
 }
-nav.main li a {
+nav.main li {
+    float: left;
     padding: 0 0 0 20px;
+    white-space: nowrap;
+}
+nav.main li a {
     color: #000000;
     font-weight: bold;
     text-decoration: none;

@@ -39,10 +39,19 @@ module KuroPaste
         set :public_folder, File.dirname(__FILE__) + "/content"
         set :haml, {:format => :html5}
 
+        not_found do
+            status 404
+            haml :missing
+        end
+
         get "/" do
             redirect "/new"
         end
 
+        get "/list" do
+            @list = Paste.all
+            haml :list
+        end
         get "/new" do
             haml :new
         end
@@ -51,20 +60,12 @@ module KuroPaste
             @paste = Paste.create(:summary => params[:summary],
                                   :language => params[:language],
                                   :contents => params[:contents])
-            if @paste
-                redirect "/#{@paste[:id]}"
-            else
-                redirect "/new"
-            end
+            redirect "/#{@paste[:id]}"
         end
 
-        get "/:id" do
-            @paste = Paste[params[:id]]
-            if @paste 
-                haml :show
-            else
-                redirect "/new"
-            end
+        get %r{^/(\d+)$} do
+            @paste = Paste[params[:captures]]
+            haml :show
         end
     end
 end

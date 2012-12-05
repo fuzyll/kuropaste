@@ -1,4 +1,10 @@
-%h2
-  #{Sanitize.clean(@paste.summary)}
-#{Uv.parse(@paste.contents, "xhtml", @paste.language, true, "idle")}
+- if @paste
+  %h2
+    #{Sanitize.clean(@paste.summary)}
+  #{Uv.parse(@paste.contents, "xhtml", @paste.language, true, "idle")}
+- else
+  %h2
+    Not Found
+  %p
+    No paste was found with the specified ID.
 
