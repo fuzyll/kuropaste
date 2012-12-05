@@ -13,10 +13,12 @@ Dependencies:
 * bundler
 
 Usage:
+```
     cd /path/to/kuropaste
     bundle install --deployment
     # safely take your box offline
     bundle exec rackup kuropaste.ru
+```
 
 Short-Term Roadmap:
 * Create new img/logo.png and img/favicon.ico
