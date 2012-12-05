@@ -1,10 +1,12 @@
-%form{:action  => "/", :method  => "post"}
-  #name
-    Name:
-    %input.name{:type  => "text", :name  => "name"}
+%h1
+  Create a New Paste
+%form{:action  => "/new", :method  => "post"}
+  #summary
+    %input.text{:type  => "text", :name  => "summary",
+                :placeholder => "Paste Summary"}
   #language
     Language:
-    %select.language{:name => "language"}
+    %select{:name => "language"}
       %option{:value => "text.plain"}
         Plain Text
       %option{:value => "text.html.basic"}
@@ -189,7 +191,7 @@
       -# text.xml.strict
       -# text.xml.xsl
   #contents
-    %textarea.contents{:name => "contents"}
+    %textarea{:id => "contents", :name => "contents"}
   #submit
-    %input.save{:type => "submit", :value => "Save"}
+    %input{:type => "submit", :value => "Save"}
 

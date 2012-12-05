@@ -27,7 +27,7 @@ module KuroPaste
     unless Database.table_exists?("pastes")
         Database.create_table("pastes") do
             primary_key :id
-            text :name
+            text :summary
             text :language
             text :contents
         end
@@ -40,17 +40,21 @@ module KuroPaste
         set :haml, {:format => :html5}
 
         get "/" do
+            redirect "/new"
+        end
+
+        get "/new" do
             haml :new
         end
 
-        post "/" do
-            @paste = Paste.create(:name => params[:name],
+        post "/new" do
+            @paste = Paste.create(:summary => params[:summary],
                                   :language => params[:language],
                                   :contents => params[:contents])
             if @paste
                 redirect "/#{@paste[:id]}"
             else
-                redirect '/'
+                redirect "/new"
             end
         end
 
@@ -59,7 +63,7 @@ module KuroPaste
             if @paste 
                 haml :show
             else
-                redirect "/"
+                redirect "/new"
             end
         end
     end

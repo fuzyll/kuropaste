@@ -4,14 +4,19 @@
     %meta{:charset => "utf-8"}
     %title KuroPaste
     %link{:rel => "stylesheet", :href => "css/style.css"}
-    %link{:rel => "stylesheet", :href => "css/twilight.css"}
+    %link{:rel => "stylesheet", :href => "css/idle.css"}
   %body
-    %header
-      %h1.logo
-        KuroPaste
-    %section
+    %header{:class => "main"}
+      #main
+        %h1.logo
+          KuroPaste
+        %nav{:class => "main"}
+          %ul
+            %li
+              %a{:href => "/"} New
+    %section{:class => "main"}
       =yield
-    %footer
+    %footer{:class => "main"}
       %p
-        KuroPaste &copy; 2012 fuzyll
+        KuroPaste &copy; 2012 fuzyll - All Rights Reserved
 
