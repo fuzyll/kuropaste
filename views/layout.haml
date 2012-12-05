@@ -7,20 +7,23 @@
     %link{:rel => "stylesheet", :href => "css/idle.css"}
   %body
     %header{:class => "main"}
-      #main
+      .main
         %h1.logo
           KuroPaste
-        %nav{:class => "main"}
+        %nav{:class => "main-left"}
           %ul
             %li
               %a{:href => "/"} New
             %li
               %a{:href => "/list"} List
+        %nav{:class => "main-right" }
+          %ul
             %li
-              %a{:href => "/numbers"} #
+              %a{:href => "/line"} #
     %section{:class => "main"}
       =yield
     %footer{:class => "main"}
-      %p
-        KuroPaste &copy; 2012 fuzyll - All Rights Reserved
+      .main
+        %p
+          KuroPaste &copy; 2012 fuzyll - All Rights Reserved
 

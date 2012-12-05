@@ -25,7 +25,6 @@ Short-Term Roadmap:
 * Log more data in the database (unique base52 paste ID, etc)
 * Limit list functionality to 25/50/100 pastes at a time
 * Add search functionality to top bar
-* Continue tweaking CSS styles
 * Test setting up Apache and Passenger
 
 Long-Term Roadmap:

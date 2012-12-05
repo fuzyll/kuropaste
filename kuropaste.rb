@@ -27,7 +27,7 @@ module KuroPaste
     unless Database.table_exists?("pastes")
         Database.create_table("pastes") do
             primary_key :id
-            datetime :timestamp,
+            timestamp :timestamp,
                 :default => Sequel::CURRENT_TIMESTAMP, 
                 :null => false
             text :summary
@@ -35,6 +35,172 @@ module KuroPaste
             text :contents
         end
     end
+
+    Syntax = {
+        "Plain Text" => "text.plain",
+        "LaTeX" => "text.tex.latex",
+        "HTML" => "text.haml.basic",
+        "HAML" => "text.haml",
+        "YAML" => "source.yaml",
+        "XML" => "text.xml",
+        "JSON" => "source.json",
+        "CSS" => "source.css",
+        "JavaScript" => "source.js",
+        "SQL" => "source.sql",
+        "Shell" => "source.shell",
+        "Fortran" => "source.fortran",
+        "Pascal" => "source.pascal",
+        "C" => "source.c",
+        "Objective C" => "source.objc",
+        "C++" => "source.c++",
+        "Objective C++" => "source.objc++",
+        "C#" => "source.c-sharp",
+        "D" => "source.d",
+        "Java" => "source.java",
+        "Perl" => "source.perl",
+        "Tcl" => "source.tcl",
+        "Lua" => "source.lua",
+        "Python" => "source.python",
+        "Ruby" => "source.ruby",
+        "Erlang" => "source.erlang",
+        "Haskell" => "source.haskell"
+        # The following are the remaining syntaxes supported by Ultraviolet.
+        # I decided to not start with all of them as options, but if you need
+        # them, here they are!
+        #
+        # source.actionscript
+        # source.active4d
+        # source.active4d.library
+        # source.ada
+        # source.antlr
+        # source.apache-config
+        # source.apache-config.mod_perl
+        # source.applescript
+        # source.asp
+        # source.asp.vb.net
+        # source.c++.qt
+        # source.c.ragel
+        # source.camlp4.ocaml
+        # source.cm
+        # source.coffee
+        # source.context-free
+        # source.css.beta
+        # source.diff
+        # source.dot
+        # source.dylan
+        # source.eiffel
+        # source.fscript
+        # source.fxscript
+        # source.gri
+        # source.groovy.groovy
+        # source.icalendar
+        # source.inform
+        # source.ini
+        # source.io
+        # source.java-props
+        # source.js.greasemonkey
+        # source.js.jquery
+        # source.js.mootools
+        # source.js.prototype
+        # source.js.prototype.bracketed
+        # source.js.yui
+        # source.lex
+        # source.lighttpd-config
+        # source.lilypond
+        # source.lisp
+        # source.logo
+        # source.logtalk
+        # source.makefile
+        # source.matlab
+        # source.mel
+        # source.mips
+        # source.ml
+        # source.modula-3
+        # source.nant-build
+        # source.ocaml
+        # source.ocamllex
+        # source.ocamlyacc
+        # source.open-gl
+        # source.pascal.vectorscript
+        # source.php.cake
+        # source.plist.tm-grammar
+        # source.postscript
+        # source.processing
+        # source.prolog
+        # source.python.django
+        # source.qmake
+        # source.quake-config
+        # source.r
+        # source.r-console
+        # source.regexp
+        # source.regexp.oniguruma
+        # source.regexp.python
+        # source.remind
+        # source.rez
+        # source.ruby.experimental
+        # source.ruby.rails
+        # source.s5
+        # source.sass
+        # source.scheme
+        # source.scilab
+        # source.scss
+        # source.slate
+        # source.smarty
+        # source.sql.ruby
+        # source.ssh-config
+        # source.strings
+        # source.swig
+        # source.tcl.macports
+        # text.active4d-ini
+        # text.bbcode
+        # text.bibtex
+        # text.blog
+        # text.blog.html
+        # text.blog.markdown
+        # text.blog.textile
+        # text.gtdalt
+        # text.html.asp
+        # text.html.asp.net
+        # text.html.cfm
+        # text.html.django
+        # text.html.dokuwiki
+        # text.html.doxygen
+        # text.html.markdown.multimarkdown
+        # text.html.mason
+        # text.html.mediawiki
+        # text.html.mt
+        # text.html.ruby
+        # text.html.strict.active4d
+        # text.html.tcl
+        # text.html.textile
+        # text.html.tt
+        # text.html.twiki
+        # text.html.xhtml.1-strict
+        # text.log.latex
+        # text.mail.markdown
+        # text.man
+        # text.moinmoin
+        # text.plain.gtd
+        # text.plain.release-notes
+        # text.plist
+        # text.pmwiki
+        # text.restructuredtext
+        # text.setext
+        # text.subversion-commit
+        # text.tabular.csv
+        # text.tabular.tsv
+        # text.tex
+        # text.tex.latex.beamer
+        # text.tex.latex.haskell
+        # text.tex.latex.memoir
+        # text.tex.latex.rd
+        # text.tex.latex.sweave
+        # text.tex.math
+        # text.txt2tags
+        # text.xml.apple-dist
+        # text.xml.strict
+        # text.xml.xsl
+    }
 
     class Paste < Sequel::Model; end
 
@@ -68,19 +234,20 @@ module KuroPaste
             redirect "/#{@paste[:id]}"
         end
 
-        get "/numbers" do
-            if session["numbers"] == false
-                session["numbers"] = true
+        get "/line" do
+            # toggle line numbers on/off and refresh page
+            if session["line"] == false
+                session["line"] = true
             else
-                session["numbers"] = false
+                session["line"] = false
             end
             redirect request.referer
         end
 
         get %r{^/(\d+)$} do
-            session["numbers"] ||= false  # default to no line numbers
+            session["line"] ||= false  # default to no line numbers
             @paste = Paste[params[:captures]]
-            @numbers = session["numbers"]
+            @line = session["line"]
             haml :show
         end
     end
