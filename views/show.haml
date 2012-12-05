@@ -1,7 +1,7 @@
 - if @paste
   %h2
     #{Sanitize.clean(@paste.summary)}
-  #{Uv.parse(@paste.contents, "xhtml", @paste.language, true, "idle")}
+  #{Uv.parse(@paste.contents, "xhtml", @paste.language, @numbers, "idle")}
 - else
   %h2
     Not Found

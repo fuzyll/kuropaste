@@ -6,7 +6,7 @@ h1, h2, h3, h4, h5, h6, p, ul, li {
     border: 0;
     outline: 0;
     font-size: 100%;
-    font-family: Helmet, Freesans, sans-serif;
+    font-family: Helmet, Helvetica, FreeSans, sans-serif;
     vertical-align: baseline;
     background: transparent;
 }
@@ -21,7 +21,10 @@ h3 { font-size: 20px; font-weight: bold; }
 h4 { font-size: 16px; font-weight: bold; }
 h5 { font-size: 14px; font-weight: bold; }
 h6 { font-size: 12px; font-weight: bold; }
-pre { font-family: Courier, monospace; font-size: 12px; }
+pre {
+    font-family: Courier New, Courier, FreeMono, monospace;
+    font-size: 12px;
+}
 input.text, textarea {
     padding: 2px;
     border: 1px solid #969696;

@@ -23,10 +23,13 @@
 ##
 
 module KuroPaste
-    Database = Sequel.sqlite("kuropaste.db")
+    Database = Sequel.sqlite(File.dirname(__FILE__) + "/kuropaste.db")
     unless Database.table_exists?("pastes")
         Database.create_table("pastes") do
             primary_key :id
+            datetime :timestamp,
+                :default => Sequel::CURRENT_TIMESTAMP, 
+                :null => false
             text :summary
             text :language
             text :contents
@@ -36,6 +39,7 @@ module KuroPaste
     class Paste < Sequel::Model; end
 
     class Application < Sinatra::Base
+        enable :sessions
         set :public_folder, File.dirname(__FILE__) + "/content"
         set :haml, {:format => :html5}
 
@@ -52,6 +56,7 @@ module KuroPaste
             @list = Paste.all
             haml :list
         end
+
         get "/new" do
             haml :new
         end
@@ -63,8 +68,19 @@ module KuroPaste
             redirect "/#{@paste[:id]}"
         end
 
+        get "/numbers" do
+            if session["numbers"] == false
+                session["numbers"] = true
+            else
+                session["numbers"] = false
+            end
+            redirect request.referer
+        end
+
         get %r{^/(\d+)$} do
+            session["numbers"] ||= false  # default to no line numbers
             @paste = Paste[params[:captures]]
+            @numbers = session["numbers"]
             haml :show
         end
     end
