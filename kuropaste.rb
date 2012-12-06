@@ -223,6 +223,22 @@ module KuroPaste
             haml :list
         end
 
+        get "/search" do
+            redirect "/new"
+        end
+
+        post "/search" do
+            matches = []
+            Paste.all.each do |paste|
+                if paste.summary.include? params[:search]
+                or paste.contents.include? params[:search]
+                    tmp << paste.id
+                end
+            end
+            @list = Paste.filter([[:id, matches]])
+            haml :list
+        end
+
         get "/new" do
             haml :new
         end

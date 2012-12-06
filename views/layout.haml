@@ -17,6 +17,9 @@
               %a{:href => "/"} New
             %li
               %a{:href => "/list"} List
+        %form{:action  => "/search", :method  => "post"}
+          %input.search{:type => "text", :name => "search",
+                      :placeholder => "Search"}
         %nav{:class => "main-right" }
           %ul
             %li
