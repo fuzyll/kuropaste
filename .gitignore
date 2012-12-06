@@ -1,4 +1,6 @@
 *.db
+*.png
+*.woff
 .bundle/*
 vendor/*
 
