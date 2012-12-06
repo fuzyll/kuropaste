@@ -21,7 +21,6 @@ Usage:
 ```
 
 Short-Term Roadmap:
-* Create new img/logo.png and img/favicon.ico
 * Log more data in the database (unique base52 paste ID, etc)
 * Limit list functionality to 25/50/100 pastes at a time
 * Add search functionality to top bar
