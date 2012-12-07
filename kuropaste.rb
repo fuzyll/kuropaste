@@ -39,7 +39,7 @@ module KuroPaste
     Syntax = {
         "Plain Text" => "text.plain",
         "LaTeX" => "text.tex.latex",
-        "HTML" => "text.haml.basic",
+        "HTML" => "text.html.basic",
         "HAML" => "text.haml",
         "YAML" => "source.yaml",
         "XML" => "text.xml",
