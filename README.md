@@ -17,7 +17,7 @@ Usage:
     cd /path/to/kuropaste
     bundle install --deployment
     # safely take your box offline
-    bundle exec rackup kuropaste.ru
+    bundle exec rackup config.ru
 ```
 
 Short-Term Roadmap:
