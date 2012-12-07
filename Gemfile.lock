@@ -1,5 +1,4 @@
 GEM
-  remote: http://rubygems.org/
   remote: https://rubygems.org/
   specs:
     haml (3.1.7)

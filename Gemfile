@@ -1,7 +1,6 @@
-source :rubygems
 source "https://rubygems.org"
 
-gem "sinatra"
+gem "sinatra", :require => "sinatra/base"
 gem "sanitize"
 gem "sequel"
 gem "sqlite3"
