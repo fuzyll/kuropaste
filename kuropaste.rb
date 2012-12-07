@@ -230,8 +230,7 @@ module KuroPaste
         post "/search" do
             matches = []
             Paste.all.each do |paste|
-                if paste.summary.include? params[:search]
-                or paste.contents.include? params[:search]
+                if paste.summary.include? params[:search] or paste.contents.include? params[:search]
                     tmp << paste.id
                 end
             end
