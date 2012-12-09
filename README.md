@@ -21,13 +21,13 @@ If you just want to run KuroPaste standalone without a web server, it should
 be as easy as doing:
 
 ```
-    sudo apt-get install ruby1.9.1
-    sudo gem install bundler
-    git clone git://github.com/fuzyll/kuropaste.git
-    cd kuropaste
-    bundle install --standalone
-    # safely take your box offline or move the directory to another box
-    rackup config.ru
+sudo apt-get install ruby1.9.1
+sudo gem install bundler
+git clone git://github.com/fuzyll/kuropaste.git
+cd kuropaste
+bundle install --standalone
+# safely take your box offline or move the directory to another box
+rackup config.ru
 ```
 
 **NOTE:** KuroPaste uses a few extensions that are native, so please be sure to
@@ -37,35 +37,36 @@ be as easy as doing:
 If you want to run KuroPaste with Apache and Passenger, here's how I did it:
 
 ```
-    sudo apt-get install ruby1.9.1 libxml2-dev libxslt1-dev apache2 \
-        apache2-prefork-dev libcurl4-openssl-dev libapr1-dev libaprutil1-dev
-    sudo gem1.9.1 install bundler passenger
-    cd /var/www
-    git clone git://github.com/fuzyll/kuropaste.git
-    cd kuropaste
-    bundle install --standalone
-    # safely take your box offline or move the directory to another box
-    sudo passenger-install-apache2-module
-    echo "LoadModule passenger_module /var/lib/gems/1.9.1/gems/passenger-3.0.18/ext/apache2/mod_passenger.so" | sudo tee /etc/apache2/mods-available/passenger.load
-    echo "PassengerRoot /var/lib/gems/1.9.1/gems/passenger-3.0.18\nPassengerRuby /usr/bin/ruby1.9.1" | sudo tee /etc/apache2/mods-available/passenger.conf
-    sudo a2enmod passenger
-    sudo cat > /etc/apache2/sites-available/kuropaste <<EOF
-    <VirtualHost *:80>
-        ServerName kuropaste
-        ServerAlias kuropaste.lan  
-        DocumentRoot /var/www/kuropaste/content
+sudo apt-get install build-essential ruby1.9.1 ruby1.9.1-dev zlib1g-dev \
+    libxml2-dev libxslt1-dev apache2 apache2-prefork-dev \
+    libcurl4-openssl-dev libapr1-dev libaprutil1-dev
+sudo gem1.9.1 install bundler passenger
+cd /var/www
+git clone git://github.com/fuzyll/kuropaste.git
+cd kuropaste
+bundle install --standalone
+# safely take your box offline or move the directory to another box
+sudo passenger-install-apache2-module
+echo "LoadModule passenger_module /var/lib/gems/1.9.1/gems/passenger-3.0.18/ext/apache2/mod_passenger.so" | sudo tee /etc/apache2/mods-available/passenger.load
+echo -e "PassengerRoot /var/lib/gems/1.9.1/gems/passenger-3.0.18\nPassengerRuby /usr/bin/ruby1.9.1" | sudo tee /etc/apache2/mods-available/passenger.conf
+sudo a2enmod passenger
+sudo cat > /etc/apache2/sites-available/kuropaste <<EOF
+<VirtualHost *:80>
+    ServerName kuropaste
+    ServerAlias kuropaste.lan  
+    DocumentRoot /var/www/kuropaste/content
 
-        <Directory /var/www/kuropaste/content>
-                Order allow,deny
-                Allow from all
-                AllowOverride All
-                Options -MultiViews
-        </Directory>
-    </VirtualHost>
-    EOF
-    sudo a2dissite default
-    sudo a2ensite kuropaste
-    sudo service apache2 restart
+    <Directory /var/www/kuropaste/content>
+            Order allow,deny
+            Allow from all
+            AllowOverride All
+            Options -MultiViews
+    </Directory>
+</VirtualHost>
+EOF
+sudo a2dissite default
+sudo a2ensite kuropaste
+sudo service apache2 restart
 ```
 
 ## Roadmap ##
