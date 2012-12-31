@@ -27,7 +27,7 @@ git clone git://github.com/fuzyll/kuropaste.git
 cd kuropaste
 bundle install --standalone
 # safely take your box offline or move the directory to another box
-rackup config.ru
+bundle exec rackup config.ru
 ```
 
 **NOTE:** KuroPaste uses a few extensions that are native, so please be sure to
