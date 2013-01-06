@@ -15,7 +15,7 @@
       %td.center
         #{paste.id}
       %td
-        %a{:href => "/#{paste.id}"} #{Sanitize.clean(paste.summary)}
+        %a{:href => "#{url "/#{paste.id}"}"} #{Sanitize.clean(paste.summary)}
       %td
         #{paste.language}
       %td

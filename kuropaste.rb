@@ -80,21 +80,21 @@ module KuroPaste
             haml :missing
         end
 
-        get "/" do
-            redirect "/new"
+        get "/?" do
+            redirect to "/new"
         end
 
-        get "/list" do
+        get "/list/?" do
             @list = Paste.all
             haml :list
         end
 
-        get "/search" do
+        get "/search/?" do
             @list = []
             haml :list
         end
 
-        post "/search" do
+        post "/search/?" do
             matches = []
             Paste.all.each do |paste|
                 if paste.summary.include? params[:search] or paste.contents.include? params[:search]
@@ -105,28 +105,28 @@ module KuroPaste
             haml :list
         end
 
-        get "/new" do
+        get "/new/?" do
             haml :new
         end
 
-        post "/new" do
+        post "/new/?" do
             @paste = Paste.create(:summary => params[:summary],
                                   :language => params[:language],
                                   :contents => params[:contents])
-            redirect "/#{@paste[:id]}"
+            redirect to "/#{@paste[:id]}"
         end
 
-        get "/line" do
+        get "/line/?" do
             # toggle line numbers on/off and refresh page
             if session["line"] == false
                 session["line"] = true
             else
                 session["line"] = false
             end
-            redirect request.referer
+            redirect to request.referer
         end
 
-        get %r{^/(\d+)$} do
+        get %r{^/(\d+)/?$} do
             session["line"] ||= false  # default to no line numbers
             @paste = Paste[params[:captures]]
             @line = session["line"]

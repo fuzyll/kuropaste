@@ -3,10 +3,10 @@
   %head
     %meta{:charset => "utf-8"}
     %title KuroPaste
-    %base{:href => "/"}
-    %link{:rel => "stylesheet", :href => "css/style.css"}
-    %link{:rel => "stylesheet", :href => "css/idle.css"}
-    %link{:rel => "icon", :type => "image/png", :href => "img/favicon.png"}
+    %link{:rel => "stylesheet", :href => "#{url "/css/style.css"}"}
+    %link{:rel => "stylesheet", :href => "#{url "/css/idle.css"}"}
+    %link{:rel => "icon", :type => "image/png",
+          :href => "#{url "/img/favicon.png"}"}
   %body
     %header{:class => "main"}
       .main
@@ -15,16 +15,16 @@
         %nav{:class => "main-left"}
           %ul
             %li
-              %a{:href => "/"} New
+              %a{:href => "#{url "/"}"} New
             %li
-              %a{:href => "/list"} List
-        %form{:action  => "/search", :method  => "post"}
-          %input.search{:type => "search", :name => "search",
+              %a{:href => "#{url "/list"}"} List
+        %form{:action  => "#{url "/search"}", :method  => "post"}
+          %input.search{:type => "text", :name => "search",
                       :placeholder => "Search"}
         %nav{:class => "main-right" }
           %ul
             %li
-              %a{:href => "/line"} #
+              %a{:href => "#{url "/line"}"} #
     %section{:class => "main"}
       =yield
     %footer{:class => "main"}

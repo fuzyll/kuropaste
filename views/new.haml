@@ -1,6 +1,6 @@
 %h2
   Create a New Paste
-%form{:action  => "/new", :method  => "post"}
+%form{:action  => "#{url "/new"}", :method  => "post"}
   #summary
     %input.text{:type  => "text", :name  => "summary",
                 :placeholder => "Paste Summary"}
