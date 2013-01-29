@@ -7,7 +7,7 @@ rescue LoadError
     Bundler.setup
     Bundler.require
 end
-require "./kuropaste"
+require File.dirname(__FILE__) + "/kuropaste"
 
 log = File.new("logs/sinatra.log", "a")
 STDOUT.reopen(log)
