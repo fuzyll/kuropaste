@@ -1,21 +1,27 @@
-# kuropaste #
+# KuroPaste #
 
-KuroPaste is intended to be a really simple Pastebin clone for use on a
-Darknet.
+KuroPaste is intended to be a really simple pastebin for use on a darknet.
 
 Features:
-* Saves pastes into a database (currently hard-coded to a SQLite database)
+* Saves pastes into a database 
 * Uses Ultraviolet to provide syntax coloring
 
 Dependencies:
 * ruby >= 1.9
 * bundler
 
+
 ## Installation ##
 
 **NOTE:** This quick guide assumes you are using a Debian-based distribution
-          (specifically Debian Wheezy or Ubuntu 12.04).  If you are not, please
+          (specifically Debian Wheezy or Ubuntu 12.04). If you are not, please
           remember to find equivalent commands for your environment.
+
+**NOTE:** KuroPaste uses a few extensions that are native, so please be sure to
+          run `bundle install --standalone` on a box with an equivalent libc if
+          you are planning to move the installation to a darknet.
+
+### Standalone ###
 
 If you just want to run KuroPaste standalone without a web server, it should
 be as easy as doing:
@@ -25,14 +31,13 @@ sudo apt-get install ruby1.9.1
 sudo gem install bundler
 git clone git://github.com/fuzyll/kuropaste.git
 cd kuropaste
+git submodule update --init --recursive
 bundle install --standalone
 # safely take your box offline or move the directory to another box
 bundle exec rackup config.ru
 ```
 
-**NOTE:** KuroPaste uses a few extensions that are native, so please be sure to
-          run `bundle install --standalone` on a box with an equivalent libc if
-          you are planning to move the installation to a darknet.
+### Hosted ###
 
 If you want to run KuroPaste with Apache and Passenger, here's how I did it:
 
@@ -44,6 +49,7 @@ sudo gem1.9.1 install bundler passenger
 cd /var/www
 git clone git://github.com/fuzyll/kuropaste.git
 cd kuropaste
+git submodule update --init --recursive
 bundle install --standalone
 # safely take your box offline or move the directory to another box
 sudo passenger-install-apache2-module
@@ -69,12 +75,15 @@ sudo a2ensite kuropaste
 sudo service apache2 restart
 ```
 
+
 ## Roadmap ##
+
 Short-Term:
 * Change primary keys in database from incrementing integers to unique base52
   IDs (these will be used as repository names after switching to Grit-backed
   pastes)
 * Paginate list and search functionality
+* Look into weird bug I got one time when pasting in some HTML
 
 Long-Term:
 * Add some unit tests or something so I know when I've broken everything

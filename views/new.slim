@@ -1,0 +1,14 @@
+h2 Create a New Paste
+form action="new" method="post"
+    #summary
+        input.text type="text" name="summary" placeholder="Paste Summary"
+    #language
+        p.inline Language:
+        select name="language"
+            - KuroPaste::Syntax.each do |key, value|
+                option value="#{key}" #{key}
+    #contents
+        textarea id="contents" name="contents"
+    #submit
+        input type="submit" value="Save"
+

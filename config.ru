@@ -1,3 +1,4 @@
+# include necessary dependencies (try local first, then system-wide)
 begin
     require "./bundle/bundler/setup"
     require "bundler"
@@ -7,10 +8,15 @@ rescue LoadError
     Bundler.setup
     Bundler.require
 end
-require File.dirname(__FILE__) + "/kuropaste"
 
+# include our application
+require "./kuropaste"
+
+# set up logging
 log = File.new("logs/sinatra.log", "a")
 STDOUT.reopen(log)
 STDERR.reopen(log)
+
+# run our application
 run KuroPaste::Application
 

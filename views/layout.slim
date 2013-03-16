@@ -1,0 +1,30 @@
+doctype html
+html
+    head
+        meta charset="utf-8"
+        title KuroPaste
+        link rel="stylesheet" href="css/style.css"
+        link rel="stylesheet" href="css/idle.css"
+        link rel="icon" type="image/png" href="img/favicon.png"
+    body
+        header.main
+            .main
+                h1.logo KuroPaste
+                nav.main-left
+                    ul
+                        li
+                            a href="/" New
+                        li
+                            a href="list" List
+                form action="search" method="post"
+                    input.search type="text" name="search" placeholder="Search"
+                nav.main-right
+                    ul
+                        li
+                            a href="line" #
+        section.main
+            == yield
+        footer.main
+            .main
+                p KuroPaste &copy; 2012-2013 fuzyll
+

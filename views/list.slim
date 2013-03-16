@@ -1,0 +1,14 @@
+h2 List of Pastes
+table
+    tr
+        th ID
+        th Name
+        th Language
+        th Time
+    - @list.each do |paste|
+        tr
+            td.center #{paste.id}
+            td <a href="#{paste.id}">#{paste.summary}</a>
+            td #{paste.language}
+            td #{paste.timestamp.strftime("%Y-%m-%d at %H:%M:%S %Z")}
+

@@ -1,5 +1,5 @@
 ##
-# KuroPaste | DarkNet Pastebin
+# KuroPaste | Darknet Pastebin
 #
 # Copyright (c) 2012-2013 Alexander Taylor <ajtaylor@fuzyll.com>
 #
@@ -15,7 +15,7 @@
 #
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 # AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
@@ -23,21 +23,25 @@
 ##
 
 module KuroPaste
+    # open our database
+    # FIXME: currently hard-coded to a local SQLite database...
     Database = Sequel.sqlite(File.dirname(__FILE__) + "/kuropaste.db")
-    unless Database.table_exists?("pastes")
-        Database.create_table("pastes") do
-            primary_key :id
-            timestamp :timestamp,
-                :default => Sequel::CURRENT_TIMESTAMP, 
-                :null => false
-            text :summary
-            text :language
-            text :contents
-        end
+
+    # create our table in the database if it does not currently exist
+    Database.create_table?("pastes") do
+        primary_key :id
+        timestamp :timestamp,
+            :default => Sequel::CURRENT_TIMESTAMP, 
+            :null => false
+        text :summary
+        text :language
+        text :contents
     end
 
+    # class representing the sequel model for our table (auto-generated)
     class Paste < Sequel::Model; end
 
+    # hash table for looking up the method needed to colorize a paste
     Syntax = {
         "Plain Text" => "text.plain",
         "Markdown" => "text.blog.markdown",
@@ -70,67 +74,73 @@ module KuroPaste
         "Haskell" => "source.haskell"
     }
 
+    # class implementing the web application
     class Application < Sinatra::Base
         enable :sessions
-        set :public_folder, File.dirname(__FILE__) + "/content"
-        set :haml, {:format => :html5}
+        set :public_folder, "./content"
+        set :slim, :pretty => true
 
         not_found do
             status 404
-            haml :missing
+            slim :missing
         end
 
         get "/?" do
-            redirect to "/new"
+            redirect "/new"
         end
 
         get "/list/?" do
             @list = Paste.all
-            haml :list
+            slim :list
         end
 
         get "/search/?" do
+            # display blank list if page was accessed with get instead of post
             @list = []
-            haml :list
+            slim :list
         end
 
         post "/search/?" do
+            # find all pastes with summaries that contain the given substring
             matches = []
             Paste.all.each do |paste|
                 if paste.summary.include? params[:search] or paste.contents.include? params[:search]
                     matches << paste.id
                 end
             end
+            
+            # put them in a list and display them to the user
             @list = Paste.filter([[:id, matches]])
-            haml :list
+            slim :list
         end
 
         get "/new/?" do
-            haml :new
+            slim :new
         end
 
         post "/new/?" do
             @paste = Paste.create(:summary => params[:summary],
                                   :language => params[:language],
                                   :contents => params[:contents])
-            redirect to "/#{@paste[:id]}"
+            redirect "/#{@paste[:id]}"
         end
 
         get "/line/?" do
-            # toggle line numbers on/off and refresh page
+            # toggle line numbers on/off in user's cookie and refresh the page
             if session["line"] == false
                 session["line"] = true
             else
                 session["line"] = false
             end
-            redirect to request.referer
+            redirect request.referer
         end
 
         get %r{^/(\d+)/?$} do
+            # display paste matching above id in the database to the user
             session["line"] ||= false  # default to no line numbers
             @paste = Paste[params[:captures]]
             @line = session["line"]
-            haml :show
+            slim :show
         end
     end
 end
